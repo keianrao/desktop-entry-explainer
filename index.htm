@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<!--
+
+-->
+<HTML>
+
+	<HEAD>
+		<META CHARSET="UTF-8">
+		<TITLE>Desktop entry explainer</TITLE>
+	</HEAD>
+	
+	<BODY>
+		<H1>Desktop entries</H1>
+		<SECTION>
+			<P>Desktop entries are files, generally with a .desktop extension. They're meant for desktop environments following the <A HREF="freedesktop.org">Cross Desktop Group</A>, so for example desktops on Linux and BSD.</P>
+			<P>Executable programs in Linux and BSD are either a compiled program in <A HREF="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format">ELF format</A>, or source code for an interpreted language. Neither of these forms let you embed <i>application metadata</i> like an app name, icon, et cetera.</P>
+			<P>Therefore desktop entries are introduced. They are separate text files, that list the filename/filepath of the executable program along with application metadata associated with it. A simplified example:</P>
+			<DIV CLASS="CODE">[Desktop Entry]
+				Version=1.0
+				Type=Application
+				Name=qpdfview
+				Comment=A tabbed document viewer
+				Icon=/usr/share/icons/hicolor/scalable/apps/qpdfview.svg
+				Exec=qpdfview --unique %F
+			</DIV>
+			<P>If you wrote a program but find it's rather boring to end up with a mere iconless executable, you can write a desktop entry to dress it. Let's try that now.</P>
+		</SECTION>
+		
+		<SECTION>
+			<H3 ID="example">New program example</H3>
+			<P>Let's create a Java AWT program that takes text from an input dialog and scrolls it from right to left, like <a href="https://en.wikipedia.org/wiki/Marquee_element">&lt;marquee&gt;</A>. 
+			<A HREF="Doubun.java">This single file containing the source code</A> can be compiled with <CODE>javac</CODE> into <I>Doubun.class</I>, which you can execute with <CODE>java Doubun</CODE>. A Java program.</P>
+			<P>And here is a screenshot of the program, with a square we've cut out to use as the program icon:</P>
+			<IMG SRC="DoubunScrncap.png" ALT="A small, horizontally long window with blue-coloured text inside"></IMG> <IMG SRC="Doubun.png" ALT="A 48 times 48 pixel cutout of the previous picture, centered on the text"></IMG>
+			<P>For this program, we can create an <b>ad-hoc</b> desktop entry as follows:</P>
+			<DIV CLASS="CODE">[Desktop Entry]
+				Type=Application
+				Name=Doubun
+				Icon=/absolute/path/to/where/Doubun/files/are/Doubun.png
+				Exec=java Doubun
+				Path=/absolute/path/to/where/Doubun/files/are
+			</DIV>
+		<SECTION>
+		
+		<SECTION>
+			<H3>Installed programs</H3>
+			For installed programs, the system distributes their files into standard directories. For example:
+			<UL>
+				<LI>icons are placed somewhere in <I>/usr/share/icons</I>;
+				<LI>executables are placed in <I>/usr/bin</I> if it can be executed directly;
+				<LI>else, launcher script in <I>/usr/bin</I> to execute something in <I>/usr/lib</I> indirectly</P>
+			</UL>
+			<P>Desktop entries are normally used for installed applications. Hence why most desktop files specify the icon just by name, and don't have a Path key.</P>
+			<P>If, rather than a program you wrote, you have others' programs already installed, but they lack an entry in your system menu, or you want to double-click on something with an icon, you can go ahead and write a desktop entry for them.</P> 
+			<P>Keys you must have are <I>Type</I>, <I>Name</I>, and <I>Exec</I>. Additional keys that are good to add are <I>Icon</I>, <I>GenericName</I>, and <I>Categories.</I></P>
+		</SECTION>
+		
+		<SECTION>
+			<H3>Quick links</H3>
+			<P><A HREF="https://www.freedesktop.org/wiki/Specifications/desktop-entry-spec/">Desktop entry specification</A>. Not a very large document, and probably explains things better than this page.</P>
+			<P><A HREF="https://specifications.freedesktop.org/desktop-entry-spec/latest/ar01s06.html">'Desktop entry keys'</A> in the specification. If you need a quick reference.</P>
+		</SECTION>
+	</BODY>
+	
+	<STYLE>
+		H1 {
+			color: #88F;
+			font-style: italic;
+			text-shadow: black 1px 1px;
+		}
+		.CODE {
+			margin-left: 4vw;
+			margin-right: 4vw;
+			white-space: pre-line;
+			font-family: monospace;
+		}
+		@media (min-width: 640px) {
+			body {
+				margin-left: 10vw;
+				margin-right: 10vw;
+				font-size: 16pt;
+			}
+			body .CODE {
+				font-size: 14pt;
+			}
+		};
+	</STYLE>
+
+</HTML>
